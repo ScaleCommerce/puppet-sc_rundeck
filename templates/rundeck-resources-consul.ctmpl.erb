@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- THIS FILE IS MANAGED BY CONSUL + PUPPET, DO NOT EDIT -->
+
+<project>
+{{- range $dc := datacenters}}
+{{- $Datacenter := print "@" $dc}}
+{{- range nodes $Datacenter }}
+  {{- $SHORTNAME := .Node | split "."}}
+  {{- $Tags := print .Node "/rundecktags" }}
+  <node name="{{ index $SHORTNAME 0 }}" description="{{.Node}}" tags='{{ key $Tags}}' hostname="{{.Address}}" username="<%= @execuser %>" />
+{{- end}}
+{{- end}}
+</project>

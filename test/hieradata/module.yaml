@@ -1,0 +1,168 @@
+---
+classes:
+  - sc_rundeck
+
+rundeck::grails_server_url: 'http://www.example.com'
+rundeck::quartz_threadCount: '50'
+rundeck::package_ensure: '2.8.4'
+rundeck::ssl_forwarding: true
+
+
+# rundeck mail config
+rundeck::mail_config:
+  host: 'smtp.mandrillapp.com'
+  port: '587'
+  username: 'scalecommerce'
+  password: '<MANDRILL_API_KEY>'
+  defaults.from: 'jobwatch@scale.sc'
+  props: {}
+
+
+# rundeck users
+rundeck::auth_config:
+  file:
+    admin_user: foo
+    admin_password: 'CRYPT:oIn1nlTUJXZ1c'
+    auth_users:
+      - username: 'test@scale.sc'
+        password: 'CRYPT:yUjACAQNtsyP9QFwu3'
+        roles:
+          - admin
+          - user
+          - developer
+
+
+# rundeck projects
+rundeck::projects:
+  example.com:
+    ssh_keypath: '/var/lib/rundeck/.ssh/id_rsa'
+    file_copier_provider: 'jsch-scp'
+    node_executor_provider: 'jsch-ssh'
+    resource_sources:
+      resources:
+        include_server_node: true
+        source_type: 'file'
+        resource_format: 'resourcexml'
+        number: '1'
+        project_name: 'example.com'
+
+
+# do not change anything from here
+rundeck::auth_types:
+  - 'file'
+rundeck::acl_policies:
+  - description: "Admin, all acccess - context project"
+    context:
+      project: '.*'
+    for:
+      resource:
+        - allow:
+          - '*'
+      adhoc:
+        - allow:
+          - '*'
+      job:
+        - allow:
+          - '*'
+      node:
+        - allow:
+          - '*'
+    by:
+      - group:
+        - 'admin'
+  - description: "Admin, all access - context application"
+    context:
+      application: 'rundeck'
+    for:
+      resource:
+        - allow:
+          - '*'
+      project:
+        - allow:
+          - '*'
+      storage:
+        - allow:
+          - '*'
+    by:
+      - group:
+        - 'admin'
+
+rundeck::api_policies:
+  - description: "API project level access control SC"
+    context:
+      project: '.*'
+    for:
+      resource:
+        - equals:
+            kind: job
+          allow:
+            - create
+            - delete
+        - equals:
+            kind: node
+          allow:
+            - read
+            - create
+            - update
+            - refresh
+        - equals:
+            kind: event
+          allow:
+            - read
+            - create
+        - equals:
+            kind: project
+          allow:
+            - '*'
+      adhoc:
+        - allow:
+          - read
+          - run
+          - kill
+      job:
+        - allow:
+          - create
+          - read
+          - update
+          - delete
+          - run
+          - kill
+      node:
+        - allow:
+          - read
+          - run
+    by:
+      - group:
+        - api_token_group
+  - description: 'API Application level access control'
+    context:
+      application: 'rundeck'
+    for:
+      resource:
+        - equals:
+            kind: 'system'
+          allow:
+            - read
+        - equals:
+            kind: 'project'
+          allow:
+            - create
+            - read
+      project:
+        - match:
+            name: '.*'
+          allow:
+            - create
+            - read
+            - import
+            - export
+            - configure
+            - delete
+            - admin
+      storage:
+        - match:
+            path: (keys|keys/.*)
+          allow: '*'
+    by:
+      - group:
+        - api_token_group

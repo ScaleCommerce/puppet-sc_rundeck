@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. /lib/lsb/init-functions
+. /etc/rundeck/profile
+
+exec /usr/bin/java ${RDECK_JVM} -cp ${BOOTSTRAP_CP} com.dtolabs.rundeck.RunServer /var/lib/rundeck ${RDECK_HTTP_PORT}

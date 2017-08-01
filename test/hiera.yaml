@@ -1,0 +1,10 @@
+backends:
+ - yaml
+
+:yaml:
+ :datadir: "%{settings::confdir}/hieradata"
+
+:hierarchy:
+ - override
+ - module
+ - common

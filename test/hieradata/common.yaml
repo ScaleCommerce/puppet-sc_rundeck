@@ -1,0 +1,29 @@
+---
+classes:
+  - supervisord
+  - consul_template
+  - consul
+
+
+consul_template::service_enable: false
+consul_template::user: root
+consul_template::group: root
+consul_template::service_ensure: stopped
+consul_template::init_style: sysv
+consul_template::version: 0.14.0
+consul_template::init_style: debian
+
+consul::init_style: 'unmanaged'
+
+consul::version: '0.9.0'
+consul::config_hash:
+  bootstrap_expect: 1
+  data_dir: '/opt/consul'
+  datacenter: 'scale'
+  log_level: 'INFO'
+  node_name: 'example.com'
+  server: true
+  bind_addr: '127.0.0.1'
+  encrypt: Dh4gL+AEejRl4bH4+FFsQw==
+
+
