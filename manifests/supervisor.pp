@@ -6,7 +6,7 @@ class sc_rundeck::supervisor {
   file {  ['/etc/init/rundeckd.conf', '/etc/init.d/rundeckd']:
     ensure  => absent,
     require => Package['rundeck'],
-  }->
+  }
 
   if !defined(File['/etc/supervisor.init']) {
     file { '/etc/supervisor.init':
