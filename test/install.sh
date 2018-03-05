@@ -5,6 +5,10 @@ sed -i -e "s/nodaemon=true/nodaemon=false/" /etc/supervisord.conf
 echo "Running in $(pwd)"
 echo "Puppet Version: $(puppet -V)"
 
+echo Hallo local
+exit 0
+
+
 # configure puppet
 ln -sf $(pwd)/test/hiera.yaml $(puppet config print confdir |cut -d: -f1)/
 curl -s https://gitlab.scale.sc/scalecommerce/postinstall/raw/master/puppet.conf > $(puppet config print confdir |cut -d: -f1)/puppet.conf
