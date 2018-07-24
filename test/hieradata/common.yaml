@@ -1,6 +1,7 @@
 ---
 classes:
   - supervisord
+  - sc_supervisor
   - consul_template
   - consul
 
