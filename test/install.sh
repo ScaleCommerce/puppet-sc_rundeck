@@ -24,6 +24,7 @@ puppet module install KyleAnderson-consul
 puppet module install gdhbashton-consul_template
 git clone https://github.com/ScaleCommerce/puppet-supervisor_provider.git $(puppet config print modulepath |cut -d: -f1)/supervisor_provider
 git clone https://github.com/ScaleCommerce/puppet-sc_java.git $(puppet config print modulepath |cut -d: -f1)/sc_java
+git clone https://github.com/ScaleCommerce/puppet-sc_supervisor.git $(puppet config print modulepath |cut -d: -f1)/sc_supervisor
 
 ln -sf $(pwd) $(puppet config print modulepath |cut -d: -f1)/sc_rundeck
 
