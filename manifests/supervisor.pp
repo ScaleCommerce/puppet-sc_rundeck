@@ -8,11 +8,12 @@ class sc_rundeck::supervisor {
     require => Package['rundeck'],
   }
 
-  if !defined(File['/etc/supervisor.init']) {
-    file { '/etc/supervisor.init':
-      ensure => directory,
-    }
-  }
+# not really needed since sc_supervisor module
+#  if !defined(File['/etc/supervisor.init']) {
+#    file { '/etc/supervisor.init':
+#      ensure => directory,
+#    }
+#  }
 
   file { '/etc/supervisor.init/rundeckd':
     owner   => 'rundeck',
