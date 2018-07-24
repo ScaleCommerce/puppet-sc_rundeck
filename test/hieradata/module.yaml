@@ -1,6 +1,7 @@
 ---
 classes:
   - sc_rundeck
+  - sc_supervisor
 
 rundeck::grails_server_url: 'http://www.example.com'
 rundeck::quartz_threadCount: '50'
