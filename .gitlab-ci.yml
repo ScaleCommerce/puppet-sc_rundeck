@@ -17,7 +17,7 @@ stages:
 
 16.04:puppet3:
   stage: Puppet 3
-  image: scalecommerce/xenial:1.3
+  image: scalecommerce/xenial:1.7
   script:
     - ./test/install.sh
     - puppet module install puppet-rundeck --version 4.0.0 --ignore-dependencies
@@ -40,7 +40,7 @@ stages:
 
 16.04:puppet4:
   stage: Puppet 4
-  image: scalecommerce/xenial:1.3
+  image: scalecommerce/xenial:1.7
   script:
     - ./test/install-puppet4.sh
     - ./test/install.sh
