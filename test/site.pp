@@ -22,7 +22,7 @@ create_resources(package, $packages)
 $services=hiera_hash('services', {})
 create_resources(service, $services)
 
-
+Apt::Source <| title != "nodesource" |> ~> Class['apt::update'] -> Package <| title != "openjdk-8-jdk" and title != "apt-transport-https" and title != "ca-certificates" |>
 
 supervisord::program { "consul":
   command   => "/usr/local/bin/consul agent --config-dir=/etc/consul",

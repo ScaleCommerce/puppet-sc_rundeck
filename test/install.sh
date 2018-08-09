@@ -5,9 +5,6 @@ sed -i -e "s/nodaemon=true/nodaemon=false/" /etc/supervisord.conf
 echo "Running in $(pwd)"
 echo "Puppet Version: $(puppet -V)"
 
-echo Hallo local
-exit 0
-
 
 # configure puppet
 ln -sf $(pwd)/test/hiera.yaml $(puppet config print confdir |cut -d: -f1)/
@@ -18,8 +15,10 @@ puppet config set certname puppet-test.scalecommerce
 # install puppet modules
 puppet module install ajcrowe-supervisord
 puppet module install puppetlabs-apt --version 2.4.0
+puppet module install puppetlabs-inifile --version 1.6.0
 # installation of rundeck module moved to gitlab-ci jobs cause we do need different versions for puppet 3, 4, 5
 #puppet module install puppet-rundeck --version 4.0.0
+puppet module install puppet-rundeck --version 5.1.0 --ignore-dependencies
 puppet module install KyleAnderson-consul
 puppet module install gdhbashton-consul_template
 git clone https://github.com/ScaleCommerce/puppet-supervisor_provider.git $(puppet config print modulepath |cut -d: -f1)/supervisor_provider
@@ -32,8 +31,4 @@ ln -sf $(pwd) $(puppet config print modulepath |cut -d: -f1)/sc_rundeck
 ln -sf ./test/document_roots /var/www
 curl -s https://omnitruck.chef.io/install.sh | bash -s -- -P inspec
 
-#fix for scalecommerce/base:0.6
-if ! dpkg-query -W apt-transport-https ; then
-    apt-get update
-    apt-get -y install --no-install-recommends apt-transport-https
-fi
+apt-get update

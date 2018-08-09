@@ -1,55 +1,17 @@
 stages:
-  - Puppet 3
-  - Puppet 4
   - Puppet 5
   - push2github
 
-14.04:puppet3:
-  stage: Puppet 3
-  image: scalecommerce/base:0.6
+16.04:rundeck2:
+  stage: Puppet 5
+  image: scalecommerce/xenial:1.11
   script:
     - ./test/install.sh
-    - puppet module install puppet-rundeck --version 4.0.0
+    - puppet apply -v test/site.pp
     - puppet apply -v test/site.pp
     - "# waiting for rundeck to start ..."
-    - sleep 60
+    - while ! nc -z localhost 4440 ; do sleep 1 ; done
     - inspec exec test/inspec/sc_rundeck.rb
-
-16.04:puppet3:
-  stage: Puppet 3
-  image: scalecommerce/xenial:1.7
-  script:
-    - ./test/install.sh
-    - puppet module install puppet-rundeck --version 4.0.0 --ignore-dependencies
-    - puppet apply -v test/site.pp
-    - "# waiting for rundeck to start ..."
-    - sleep 60
-    - inspec exec test/inspec/sc_rundeck.rb
-
-14.04:puppet4:
-  stage: Puppet 4
-  image: scalecommerce/base:0.6
-  script:
-    - ./test/install-puppet4.sh
-    - ./test/install.sh
-    - export PATH=/opt/puppetlabs/bin:$PATH
-    - puppet module install puppet-rundeck --version 4.0.1
-    - puppet apply -v test/site.pp
-    - sleep 60
-    - inspec exec test/inspec/sc_rundeck.rb
-
-16.04:puppet4:
-  stage: Puppet 4
-  image: scalecommerce/xenial:1.7
-  script:
-    - ./test/install-puppet4.sh
-    - ./test/install.sh
-    - export PATH=/opt/puppetlabs/bin:$PATH
-    - puppet module install puppet-rundeck --version 4.0.1
-    - puppet apply -v test/site.pp
-    - sleep 60
-    - inspec exec test/inspec/sc_rundeck.rb
-
 
 push2github:
   stage: push2github

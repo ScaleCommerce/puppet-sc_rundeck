@@ -14,9 +14,8 @@ consul_template::init_style: sysv
 consul_template::version: 0.14.0
 consul_template::init_style: debian
 
+consul::version: '1.0.6'
 consul::init_style: 'unmanaged'
-
-consul::version: '0.9.0'
 consul::config_hash:
   bootstrap_expect: 1
   data_dir: '/opt/consul'
@@ -26,5 +25,3 @@ consul::config_hash:
   server: true
   bind_addr: '127.0.0.1'
   encrypt: Dh4gL+AEejRl4bH4+FFsQw==
-
-

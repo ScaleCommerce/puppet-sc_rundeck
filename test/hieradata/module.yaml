@@ -2,12 +2,21 @@
 classes:
   - sc_rundeck
   - sc_supervisor
+  - sc_java
+
+# fix for broken oracle java
+sc_java::java_distribution: openjdk
 
 rundeck::grails_server_url: 'http://www.example.com'
 rundeck::quartz_threadCount: '50'
-rundeck::package_ensure: '2.8.4'
+rundeck::package_ensure: '2.11.4'
 rundeck::ssl_forwarding: true
+rundeck::jvm_args: "-Duser.timezone=Europe/Berlin -Drundeck.jetty.connector.forwarded=true -Xmx1024m -Xms256m -server"
+rundeck::repo_apt_source: 'https://rundeck.mirror.scale.sc/rundeck/rundeck-deb'
+rundeck::session_timeout: 14400
 
+rundeck::gui_config:
+  rundeck.api.tokens.duration.max: 0
 
 # rundeck mail config
 rundeck::mail_config:
@@ -44,7 +53,7 @@ rundeck::projects:
         include_server_node: true
         source_type: 'file'
         resource_format: 'resourcexml'
-        number: '1'
+        number: 1
         project_name: 'example.com'
 
 
