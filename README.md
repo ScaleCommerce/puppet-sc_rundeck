@@ -47,39 +47,10 @@ Check out hiera config examples in [test/hiera/module.yaml](test/hiera/module.ya
 
 ## Testing
 
-GitLab runner is activated to test after each push.
+When making changes you can test this module locally with [gitlab-runner on Mac OSX](https://docs.gitlab.com/runner/install/osx.html)
+
+``gitlab-runner exec docker --env "GIT_STRATEGY=none" --docker-volumes `pwd`:/builds/project-0 xenial:puppet5``
 
 ### InSpec
 
 Configuration testing is done with `InSpec`: https://www.inspec.io/
-
-### Local testing
-
-To test changes before committing them, you can execute the gitlab runner locally.
-Unfortunately the official gitlab-runner does not support local testing (according feature request: https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1359). So we need a custom binary:
-
-1. install docker
-
-2. download gitlab-runner binary
-
-```bash
-sudo curl --output /usr/local/bin/gitlab-ci-multi-runner-sc https://gitlab.scale.sc/a.kirchner/gitlab-ci-multi-runner-sc/raw/master/bin/gitlab-ci-multi-runner-sc
-sudo chmod +x /usr/local/bin/gitlab-ci-multi-runner-sc
-```
-
-3. execute in your working copy
-
-```bash
-gitlab-ci-multi-runner-sc exec docker --docker-volumes `pwd`:/tmp/local-working-directory <TEST>
-```
-
-The following tests are available:
-
-`14.04:puppet3`
-
-`16.04:puppet3`
-
-`14.04:puppet4`
-
-`16.04:puppet4`
-
