@@ -2,7 +2,7 @@ stages:
   - Puppet 5
   - push2github
 
-16.04:rundeck2:
+16.04:rundeck2:puppet5:
   stage: Puppet 5
   image: scalecommerce/xenial:1.11
   script:
