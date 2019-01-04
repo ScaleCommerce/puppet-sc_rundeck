@@ -4,7 +4,7 @@ stages:
 
 16.04:rundeck2:puppet5:
   stage: Puppet 5
-  image: scalecommerce/xenial:1.11
+  image: scalecommerce/xenial:1.15
   script:
     - ./test/install.sh
     - puppet apply -v test/site.pp

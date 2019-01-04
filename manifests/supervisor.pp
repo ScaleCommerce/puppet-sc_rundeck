@@ -8,19 +8,18 @@ class sc_rundeck::supervisor {
     require => Package['rundeck'],
   }
 
-# not really needed since sc_supervisor module
-#  if !defined(File['/etc/supervisor.init']) {
-#    file { '/etc/supervisor.init':
-#      ensure => directory,
-#    }
-#  }
+  if !defined(File['/etc/supervisor.init']) {
+    file { '/etc/supervisor.init':
+      ensure => directory,
+    }
+  }
 
   file { '/etc/supervisor.init/rundeckd':
     owner   => 'rundeck',
     group   => 'rundeck',
     mode    => '750',
     content => template("${module_name}/rundeck.supervisor.init.erb"),
-    require => File['/etc/supervisor.init'],
+    require => [File['/etc/supervisor.init'],Package[rundeck]],
   }
 
   supervisord::program { 'rundeckd':
@@ -28,7 +27,7 @@ class sc_rundeck::supervisor {
     user      => 'rundeck',
     autostart   => true,
     autorestart => true,
-    require     => Package['rundeck'],
+    require     => File['/etc/supervisor.init/rundeckd'],
     before      => Service['rundeckd'],
   }~>
 
