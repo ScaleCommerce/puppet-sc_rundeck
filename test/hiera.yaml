@@ -1,10 +1,13 @@
-backends:
- - yaml
+---
+version: 5
+defaults:
+  datadir: hieradata
+  data_hash: yaml_data
 
-:yaml:
- :datadir: "%{settings::confdir}/hieradata"
-
-:hierarchy:
- - override
- - module
- - common
+hierarchy:
+  - name: overrride
+    path: override.yaml
+  - name: common
+    path: common.yaml
+  - name: module
+    path: module.yaml
