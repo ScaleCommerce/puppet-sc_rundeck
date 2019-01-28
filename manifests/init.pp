@@ -12,6 +12,8 @@ class sc_rundeck (
   include rundeck
 
   Class['sc_java'] -> Class['::rundeck::install']
-  Class['::rundeck::install'] -> Class['::rundeck::config::global::web']
 
+  if versioncmp( $rundeck::package_ensure, '3.0.0' ) < 0 {
+    Class['::rundeck::install'] -> Class['::rundeck::config::global::web']
+  }
 }

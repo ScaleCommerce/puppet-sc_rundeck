@@ -18,7 +18,7 @@ puppet module install puppetlabs-apt --version 2.4.0
 puppet module install puppetlabs-inifile --version 1.6.0
 # installation of rundeck module moved to gitlab-ci jobs cause we do need different versions for puppet 3, 4, 5
 #puppet module install puppet-rundeck --version 4.0.0
-puppet module install puppet-rundeck --version 5.1.0 --ignore-dependencies
+puppet module install puppet-rundeck --version 5.4.0 --ignore-dependencies
 puppet module install KyleAnderson-consul
 puppet module install gdhbashton-consul_template
 git clone https://github.com/ScaleCommerce/puppet-supervisor_provider.git $(puppet config print modulepath |cut -d: -f1)/supervisor_provider
