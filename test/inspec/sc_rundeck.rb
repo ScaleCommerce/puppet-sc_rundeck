@@ -30,7 +30,7 @@ end
 
 
 # does resources.xml exist?
-describe file('/var/lib/rundeck/projects/example.com/etc/resources.xml') do
+describe file('/var/lib/rundeck/projects/example.com/etc/example.com.xml') do
   its('content') { should match 'name="example"' }
   its('content') { should match 'description="example.com"' }
   its('content') { should match 'username="scjobs"' }
