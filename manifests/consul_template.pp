@@ -17,9 +17,9 @@ class sc_rundeck::consul_template (
   $rundeck_projects = hiera_hash('rundeck::projects', {})
 
   each($rundeck_projects) |$k, $v| {
-    $project_name = $v['resource_sources']['resources']['project_name']
-    supervisord::program { "rundeck-node-consul-$k":
-      command   => "/usr/local/bin/consul-template --template '/var/lib/rundeck/consul/rundeck-resources.ctmpl:/var/lib/rundeck/projects/$project_name/etc/resources.xml'",
+    $project_name = $k
+    supervisord::program { "rundeck-node-consul-$project_name":
+      command   => "/usr/local/bin/consul-template --template '/var/lib/rundeck/consul/rundeck-resources.ctmpl:/var/lib/rundeck/projects/$project_name/etc/$project_name.xml'",
       user    => 'rundeck',
       require => File['/var/lib/rundeck/consul/rundeck-resources.ctmpl'],
     }
