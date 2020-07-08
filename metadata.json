@@ -1,6 +1,6 @@
 {
   "name": "scalecommerce-sc_rundeck",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Andreas Ziethen ScaleCommerce GmbH",
   "summary": "ScaleCommerce Wrapper Module for puppet-rundeck. Manages Supervisord.",
   "license": "Apache 2.0",
