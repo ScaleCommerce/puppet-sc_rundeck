@@ -25,6 +25,7 @@ class sc_rundeck::supervisor {
   supervisord::program { 'rundeckd':
     command   => '/etc/supervisor.init/rundeckd',
     user      => 'rundeck',
+    program_environment => { 'HOME' => '/var/lib/rundeck', 'USER' => 'rundeck' },
     autostart   => true,
     autorestart => true,
     require     => File['/etc/supervisor.init/rundeckd'],
