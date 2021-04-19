@@ -29,4 +29,4 @@ stages:
 push2github:
   stage: push2github
   script:
-    - git push --quiet --mirror https://$GITHUB_TOKEN@github.com/ScaleCommerce/puppet-sc_rundeck.git
+    - git push --quiet --mirror https://$NEW_GITHUB_TOKEN@github.com/ScaleCommerce/puppet-sc_rundeck.git
