@@ -8,7 +8,7 @@
 {{- range nodes $Datacenter }}
   {{- $SHORTNAME := .Node | split "."}}
   {{- $Tags := print .Node "/rundecktags" }}
-  <node name="{{ index $SHORTNAME 0 }}" description="{{.Node}}" tags='{{ key $Tags}}' hostname="{{.Address}}" username="<%= @execuser %>" />
+    <node name="{{ index $SHORTNAME 0 }}" description="{{.Node}}" tags='{{ if keyExists $Tags }}{{ key $Tags}}{{ end }}' hostname="{{.Address}}" username="<%= @execuser %>" />
 {{- end}}
 {{- end}}
 </project>
