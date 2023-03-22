@@ -1,3 +1,4 @@
+image: scalecommerce/xenial:1.18
 stages:
 #  - Puppet 5
   - push2github
@@ -30,3 +31,10 @@ push2github:
   stage: push2github
   script:
     - git push --quiet --mirror https://$GITHUB_TOKEN@github.com/ScaleCommerce/puppet-sc_rundeck.git
+
+push2github:
+  stage: push2github
+  only:
+    - master@scalecommerce/puppet-modules/puppet-sc_apache
+  script:
+    - git push --quiet --mirror https://$GITHUB_TOKEN@github.com/ScaleCommerce/puppet-sc_apache.gi
