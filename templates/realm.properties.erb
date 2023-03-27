@@ -1,0 +1,41 @@
+#
+# This file defines users passwords and roles for a HashUserRealm
+#
+# The format is
+#  <username>: <password>[,<rolename> ...]
+#
+# Passwords may be clear text, obfuscated or checksummed.  The class
+# org.mortbay.util.Password should be used to generate obfuscated
+# passwords or password checksums
+#
+# If DIGEST Authentication is used, the password must be in a recoverable
+# format, either plain text or OBF:.
+#
+#jetty: MD5:164c88b302622e17050af52c89945d44,user
+#admin: CRYPT:ad1ks..kc.1Ug,server-administrator,content-administrator,admin
+#other: OBF:1xmk1w261u9r1w1c1xmq
+#plain: plain
+#user: password
+# This entry is for digest auth.  The credential is a MD5 hash of username:realmname:password
+#digest: MD5:6e120743ad67abfbc385bc2bb754e297
+
+#
+# This sets the default user accounts for the Rundeck app
+#
+<%= scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['admin_user'] %>:<%= scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['admin_password'] %>,user,admin,architect,deploy,build
+<%- if scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users'] -%>
+  <%- if scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users'].kind_of?(Array) -%>
+    <%- scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users'].each do |x| -%>
+<%= x['username'] -%>:<%= x.fetch('password', '-') -%>
+      <%- if x['roles'] -%>
+        <%- x['roles'].each do |v| -%>,<%= v -%><%- end %>
+      <%- end -%>
+    <%- end -%>
+  <%- else -%>
+<%= scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users']['username'] -%>:<%= scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users']['password'] -%>
+    <%- if scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users']['roles'] -%>
+      <%- scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users']['roles'].each do |v| -%>,<%= v -%><%- end %>
+    <%- end -%>
+  <%- end -%>
+<%- end %>
+

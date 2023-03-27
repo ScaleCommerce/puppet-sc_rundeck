@@ -16,4 +16,9 @@ class sc_rundeck (
   if versioncmp( $rundeck::package_ensure, '3.0.0' ) < 0 {
     Class['::rundeck::install'] -> Class['::rundeck::config::global::web']
   }
+  
+  file { "/etc/rundeck/sc_realm.properties":
+    content => template("${module_name}/realm.properties.erb"),
+  }
+
 }
