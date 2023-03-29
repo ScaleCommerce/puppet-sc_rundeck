@@ -22,7 +22,7 @@
 #
 # This sets the default user accounts for the Rundeck app
 #
-<%= scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['admin_user'] %>:<%= scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['admin_password'] %>,user,admin,architect,deploy,build
+<%- if scope().call_function('lookup', ['rundeck::auth_config'])['myscale'] -%>
 <%- if scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users'] -%>
   <%- if scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users'].kind_of?(Array) -%>
     <%- scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users'].each do |x| -%>
@@ -37,5 +37,6 @@
       <%- scope().call_function('lookup', ['rundeck::auth_config'])['myscale']['auth_users']['roles'].each do |v| -%>,<%= v -%><%- end %>
     <%- end -%>
   <%- end -%>
+<%- end %>
 <%- end %>
 
